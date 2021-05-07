@@ -1,22 +1,28 @@
-import React, { useState } from 'react'
-import {
-    Link
-} from 'react-router-dom';
-import { Button } from 'semantic-ui-react';
+import React, { useState, useEffect } from 'react'
 import { screenRecorder } from '../../ScreenRecorder.js';
 
 const Recorder = () => {
 
     const [isRecording, setIsRecording] = useState(false);
 
+    useEffect(() => {
+        window.onbeforeunload = () => {
+            screenRecorder.stop()
+            window.opener.setRecordingState(false)
+            return
+        }
+    })
+
     const startRecording = async () => {
         const status = await screenRecorder.start()
         status === 'recording' ? setIsRecording(true) : setIsRecording(false)
+        window.opener.setRecordingState(true)
     }
 
     const stopRecording = () => {
         setIsRecording(false)
         screenRecorder.stop()
+        window.opener.setRecordingState(false)
     }
 
     const handleClick = () => {
@@ -31,17 +37,10 @@ const Recorder = () => {
         <div>
             <h2>This is the recorder component</h2>
             <div>
-                <Button
-                    negative={isRecording}
-                    positive={!isRecording}
+                <button
                     onClick={handleClick}>{isRecording ? 'Stop recording' : 'Start recording'}
-                </Button>
-
+                </button>
             </div>
-            <div>
-                <Link to='/'><Button>Home</Button></Link>
-            </div>
-
         </div>
     )
 }

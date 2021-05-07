@@ -5,7 +5,6 @@ import {
 } from 'react-router-dom';
 import Home from './components/home/Home.jsx';
 import Recorder from './components/recorder/Recorder.jsx';
-import './App.css';
 
 function App() {
   return (

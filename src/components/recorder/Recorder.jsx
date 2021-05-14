@@ -3,13 +3,13 @@ import { screenRecorder } from '../../ScreenRecorder.js';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import { recorderStyles } from '../../resources/resources.js';
+import { recorderWindowStyles } from '../../resources/resources.js';
+import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import VideocamIcon from '@material-ui/icons/Videocam';
 import StopIcon from '@material-ui/icons/Stop';
 
-
 const useStyles = makeStyles(
-    recorderStyles
+    recorderWindowStyles
 )
 
 const Recorder = () => {
@@ -49,20 +49,27 @@ const Recorder = () => {
     return (
 
         <div className={classes.root}>
-            <div className={classes.textCtn}>
-                <Typography variant='h6' align='center'>{isRecording ? 'Stop recording your screen' : 'Start recording your screen'}</Typography>
-                <Typography variant='subtitle1' align='center'>{isRecording ? 'The file will download to your computer' : 'Close this window to cancel recording'}</Typography>
+            <div className={classes.ctrlCtn}>
+                <div>
+                    {isRecording ? <StopIcon /> : <PlayCircleOutlineIcon fontSize='large' />}
+                </div>
+                <div className={classes.textCtn}>
+                    <Typography variant='h6' align='center'>{isRecording ? 'Stop recording your screen' : 'Start recording your screen'}</Typography>
+                    <Typography variant='subtitle1' align='center'>{isRecording ? 'The file will download to your computer' : 'Close this window to cancel recording'}</Typography>
+                </div>
+                <div className={classes.btnCtn}>
+                    <Button
+                        variant='contained'
+                        color={isRecording ? 'secondary' : 'primary'}
+                        onClick={handleClick}
+                        fullWidth='true'
+                        startIcon={isRecording ? <StopIcon /> : <VideocamIcon />}
+                    >
+                        {isRecording ? 'Stop' : 'Start'}
+                    </Button>
+                </div>
             </div>
-            <div className={classes.btnCtn}>
-                <Button
-                    variant='contained'
-                    onClick={handleClick}
-                    fullWidth='true'
-                    startIcon={isRecording ? <StopIcon /> : <VideocamIcon />}
-                >
-                    {isRecording ? 'Stop' : 'Start'}
-                </Button>
-            </div>
+
         </div>
 
 
